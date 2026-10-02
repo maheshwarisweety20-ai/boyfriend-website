@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Person 💌</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins & Dancing Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pastelPink: '#ffd1dc',
+                        softCream: '#fffbf7',
+                        roseDust: '#e0a9a7',
+                        deepBerry: '#5c3a41',
+                        warmBlush: '#ffccd5'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        script: ['Dancing Script', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fffbf7;
+            color: #5c3a41;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Floating Hearts Animation Background */
+        .floating-heart {
+            position: absolute;
+            color: rgba(224, 169, 167, 0.4);
+            animation: floatUp 8s infinite linear;
+            z-index: 0;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) scale(0.6) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.4) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Glassmorphism card effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 209, 220, 0.5);
+        }
+
+        /* Flip Card styling */
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(224, 169, 167, 0.3);
+        }
+        .flip-card-front {
+            background-color: white;
+            color: #5c3a41;
+            border: 2px solid #ffd1dc;
+        }
+        .flip-card-back {
+            background-color: #ffd1dc;
+            color: #5c3a41;
+            transform: rotateY(180deg);
+            border: 2px solid #e0a9a7;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between selection:bg-pastelPink selection:text-deepBerry">
+
+    <div id="hearts-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="relative z-10 flex flex-col min-h-screen">
+
+        <header class="w-full py-4 px-6 md:px-12 flex justify-between items-center glass-card sticky top-0 z-50 shadow-sm">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl animate-pulse">🧸</span>
+                <span class="font-script text-3xl font-bold text-roseDust">Happy Boyfriend's Day</span>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#hero" class="hover:text-roseDust transition">Home</a>
+                <a href="#reasons" class="hover:text-roseDust transition">Why I Love You</a>
+                <a href="#gallery" class="hover:text-roseDust transition">Memories</a>
+                <a href="#playlist" class="hover:text-roseDust transition">Our Vibe</a>
+                <a href="#surprise" class="hover:text-roseDust transition">Surprise 💌</a>
+            </nav>
+            <button onclick="triggerLoveSurprise()" class="bg-roseDust hover:bg-[#d49694] text-white px-4 py-2 rounded-full text-sm font-semibold shadow-md transition transform hover:scale-105">
+                Send Love 💕
+            </button>
+        </header>
+
+        <section id="hero" class="flex-grow flex flex-col items-center justify-center text-center px-6 py-16 md:py-24">
+            <div class="glass-card p-8 md:p-14 rounded-3xl max-w-2xl w-full shadow-xl border-2 border-pastelPink relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 text-7xl opacity-20">💖</div>
+                <div class="absolute -bottom-10 -left-10 text-7xl opacity-20">✨</div>
+                
+                <div class="w-32 h-32 md:w-40 md:h-40 mx-auto mb-6 rounded-full border-4 border-pastelPink overflow-hidden shadow-inner bg-roseDust/10 flex items-center justify-center">
+                    <!-- Placeholder photo for Boyfriend -->
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="My Boyfriend" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/ffd1dc/5c3a41?text=My+Love'">
+                </div>
+
+                <span class="bg-pastelPink text-deepBerry px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 inline-block">
+                    Official Boyfriend Day Celebration 🏆
+                </span>
+
+                <h1 class="font-script text-5xl md:text-7xl font-bold text-deepBerry mb-4">
+                    To My Favorite Person
+                </h1>
+                
+                <p class="text-sm md:text-base text-gray-700 leading-relaxed max-w-lg mx-auto mb-8 font-light">
+                    Life is infinitely brighter, cozier, and way more fun with you in it. Thank you for being my anchor, my favorite laugh, and my absolute best friend.
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#reasons" class="bg-deepBerry text-white px-6 py-3 rounded-full font-medium shadow-md hover:bg-roseDust transition transform hover:-translate-y-0.5">
+                        Discover Why You're The Best ✨
+                    </a>
+                    <a href="#surprise" class="border-2 border-roseDust text-deepBerry px-6 py-3 rounded-full font-medium hover:bg-pastelPink/50 transition">
+                        Open Secret Note 💌
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="reasons" class="py-16 px-6 md:px-12 max-w-6xl mx-auto w-full">
+            <div class="text-center mb-12">
+                <h2 class="font-script text-4xl md:text-5xl font-bold text-deepBerry mb-2">100 Reasons You're Amazing</h2>
+                <p class="text-sm text-gray-600">Tap or hover on any card to flip and discover a sweet little secret!</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="flip-card h-56 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="text-3xl mb-3">🥺</span>
+                            <h3 class="font-bold text-lg text-deepBerry">Your Warm Hugs</h3>
+                            <p class="text-xs text-gray-500 mt-2">(Tap to flip)</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="text-sm font-medium">Whenever I am in your arms, everything in the world feels completely safe and right.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flip-card h-56 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="text-3xl mb-3">😂</span>
+                            <h3 class="font-bold text-lg text-deepBerry">Your Goofy Laugh</h3>
+                            <p class="text-xs text-gray-500 mt-2">(Tap to flip)</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="text-sm font-medium">Hearing you laugh is instantly my favorite sound of the entire day. It's totally contagious!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flip-card h-56 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="text-3xl mb-3">🧠</span>
+                            <h3 class="font-bold text-lg text-deepBerry">Your Brilliant Mind</h3>
+                            <p class="text-xs text-gray-500 mt-2">(Tap to flip)</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="text-sm font-medium">I love how passionate you get when talking about things you love. You're so smart and inspiring.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="flip-card h-56 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="text-3xl mb-3">🍕</span>
+                            <h3 class="font-bold text-lg text-deepBerry">Food Partner in Crime</h3>
+                            <p class="text-xs text-gray-500 mt-2">(Tap to flip)</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="text-sm font-medium">No one else would happily share every meal, try weird snacks, and split dessert with me like you do.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="flip-card h-56 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="text-3xl mb-3">🛡️</span>
+                            <h3 class="font-bold text-lg text-deepBerry">My Biggest Supporter</h3>
+                            <p class="text-xs text-gray-500 mt-2">(Tap to flip)</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="text-sm font-medium">You believe in me even when I doubt myself. Thank you for always cheering me on.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="flip-card h-56 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="text-3xl mb-3">🌙</span>
+                            <h3 class="font-bold text-lg text-deepBerry">Late Night Talks</h3>
+                            <p class="text-xs text-gray-500 mt-2">(Tap to flip)</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="text-sm font-medium">Hours feel like minutes when I'm talking to you about everything and nothing at all.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="py-16 px-6 md:px-12 max-w-6xl mx-auto w-full">
+            <div class="text-center mb-12">
+                <span class="text-xs tracking-widest text-roseDust font-bold uppercase">Captured Magic</span>
+                <h2 class="font-script text-4xl md:text-5xl font-bold text-deepBerry mt-1">Our Favorite Core Memories</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Memory 1 -->
+                <div class="glass-card p-3 rounded-2xl shadow-md transform hover:-translate-y-1 transition group">
+                    <div class="overflow-hidden rounded-xl h-64 mb-3 bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80" alt="Date memory" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x600/ffd1dc/5c3a41?text=Memory+1'">
+                    </div>
+                    <div class="px-2 pb-2">
+                        <div class="flex justify-between items-center text-xs text-roseDust font-semibold mb-1">
+                            <span>Our First Trip Together</span>
+                            <span>✨</span>
+                        </div>
+                        <p class="text-xs text-gray-600">That unforgettable weekend where we laughed until our stomachs hurt.</p>
+                    </div>
+                </div>
+
+                <!-- Memory 2 -->
+                <div class="glass-card p-3 rounded-2xl shadow-md transform hover:-translate-y-1 transition group">
+                    <div class="overflow-hidden rounded-xl h-64 mb-3 bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=600&q=80" alt="Chill memory" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x600/ffd1dc/5c3a41?text=Memory+2'">
+                    </div>
+                    <div class="px-2 pb-2">
+                        <div class="flex justify-between items-center text-xs text-roseDust font-semibold mb-1">
+                            <span>Lazy Sunday Cuddles</span>
+                            <span>🧸</span>
+                        </div>
+                        <p class="text-xs text-gray-600">Nowhere to be, nothing to do, just you, me, and our favorite comfort show.</p>
+                    </div>
+                </div>
+
+                <!-- Memory 3 -->
+                <div class="glass-card p-3 rounded-2xl shadow-md transform hover:-translate-y-1 transition group">
+                    <div class="overflow-hidden rounded-xl h-64 mb-3 bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=600&q=80" alt="Goofy memory" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x600/ffd1dc/5c3a41?text=Memory+3'">
+                    </div>
+                    <div class="px-2 pb-2">
+                        <div class="flex justify-between items-center text-xs text-roseDust font-semibold mb-1">
+                            <span>Random Coffee Date</span>
+                            <span>☕</span>
+                        </div>
+                        <p class="text-xs text-gray-600">You stealing sips of my iced latte when you swore you didn't want any.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="playlist" class="py-16 px-6 md:px-12 max-w-4xl mx-auto w-full">
+            <div class="glass-card rounded-3xl p-6 md:p-10 shadow-xl border-2 border-pastelPink relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-pastelPink text-deepBerry text-xs font-bold px-4 py-2 rounded-bl-2xl">
+                    🎵 Our Soundtrack
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="w-36 h-36 md:w-44 md:h-44 rounded-2xl bg-gradient-to-tr from-roseDust to-pastelPink flex items-center justify-center shadow-lg relative group overflow-hidden">
+                        <i class="fa-solid fa-music text-white text-5xl animate-bounce"></i>
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                            <span class="text-white text-xs font-semibold bg-black/40 px-3 py-1 rounded-full">On Repeat</span>
+                        </div>
+                    </div>
+
+                    <div class="flex-grow text-center md:text-left">
+                        <span class="text-xs font-bold text-roseDust uppercase tracking-widest">Spotify Vibe Player</span>
+                        <h3 class="font-script text-3xl md:text-4xl font-bold text-deepBerry mt-1 mb-2">Songs That Remind Me Of You</h3>
+                        <p class="text-sm text-gray-600 mb-6">Every single time these tracks play on shuffle, I instantly smile and think of your face.</p>
+                        
+                        <!-- Mini fake player controls -->
+                        <div class="bg-white/80 p-4 rounded-2xl border border-pastelPink shadow-inner flex flex-col gap-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-lg bg-pastelPink flex items-center justify-center text-deepBerry font-bold">▶</div>
+                                    <div class="text-left">
+                                        <h4 class="text-sm font-bold text-deepBerry" id="song-title">Golden Hour - JVKE</h4>
+                                        <p class="text-xs text-gray-500" id="song-artist">Dedicated to my favorite person</p>
+                                    </div>
+                                </div>
+                                <button onclick="toggleMusicDemo()" id="play-btn" class="bg-roseDust text-white w-10 h-10 rounded-full flex items-center justify-center shadow hover:bg-deepBerry transition">
+                                    <i class="fa-solid fa-play" id="play-icon"></i>
+                                </button>
+                            </div>
+                            <!-- Progress bar -->
+                            <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                                <div id="progress-bar" class="bg-roseDust h-full w-1/3 transition-all duration-300"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="surprise" class="py-16 px-6 md:px-12 max-w-3xl mx-auto w-full text-center">
+            <div class="glass-card p-8 md:p-12 rounded-3xl shadow-xl border-2 border-pastelPink">
+                <span class="text-3xl mb-3 inline-block">💌</span>
+                <h2 class="font-script text-4xl md:text-5xl font-bold text-deepBerry mb-4">A Special Message For You</h2>
+                <p class="text-sm md:text-base text-gray-700 mb-8 leading-relaxed">
+                    You've reached the end of this little page, but you'll never reach the end of my love for you. Click the button below to claim your official Boyfriend's Day prize!
+                </p>
+
+                <button onclick="openLoveModal()" class="bg-gradient-to-r from-roseDust to-deepBerry text-white font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition text-base md:text-lg flex items-center justify-center mx-auto space-x-3">
+                    <i class="fa-solid fa-gift"></i>
+                    <span>Open Your Surprise Gift!</span>
+                </button>
+            </div>
+        </section>
+
+        <footer class="py-8 text-center text-xs text-gray-500 border-t border-pastelPink/40">
+            <p>Made with endless love & cuddles for Boyfriend's Day 🧸💖</p>
+        </footer>
+
+    </div>
+
+    <div id="love-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-card bg-white p-8 rounded-3xl max-w-md w-full shadow-2xl border-4 border-pastelPink text-center transform scale-95 transition-transform duration-300 relative" id="modal-content">
+            <button onclick="closeLoveModal()" class="absolute top-4 right-4 text-gray-400 hover:text-deepBerry text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-5xl mb-4">💝</div>
+            <h3 class="font-script text-3xl font-bold text-deepBerry mb-3">You Are My Everything</h3>
+            <p class="text-sm text-gray-700 leading-relaxed mb-6">
+                Thank you for holding my hand through every high and low. You are the kindest, sweetest, most wonderful boyfriend in the entire universe. I love you more than words can say! 🌹✨
+            </p>
+            <button onclick="closeLoveModal(); triggerLoveSurprise();" class="bg-roseDust hover:bg-deepBerry text-white font-medium px-6 py-2.5 rounded-full text-sm shadow transition">
+                Yay! More Confetti 🎉
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Generate Floating Hearts Background
+        const heartsContainer = document.getElementById('hearts-container');
+        const heartSymbols = ['💖', '✨', '💗', '💕', '🧸', '🌹', '💘'];
+
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 12) + 'px';
+            heart.style.animationDuration = (Math.random() * 5 + 6) + 's';
+            heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heartsContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        setInterval(createFloatingHeart, 600);
+
+        // Confetti effect function
+        function triggerLoveSurprise() {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#ffd1dc', '#e0a9a7', '#fffbf7', '#ffccd5', '#5c3a41']
+            });
+        }
+
+        // Modal triggers
+        const modal = document.getElementById('love-modal');
+        const modalContent = document.getElementById('modal-content');
+
+        function openLoveModal() {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+            triggerLoveSurprise();
+        }
+
+        function closeLoveModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+        }
+
+        // Fake Music Player Simulation
+        let isPlaying = false;
+        function toggleMusicDemo() {
+            isPlaying = !isPlaying;
+            const playIcon = document.getElementById('play-icon');
+            const progressBar = document.getElementById('progress-bar');
+            
+            if (isPlaying) {
+                playIcon.className = "fa-solid fa-pause";
+                progressBar.style.width = "75%";
+                triggerLoveSurprise();
+            } else {
+                playIcon.className = "fa-solid fa-play";
+                progressBar.style.width = "30%";
+            }
+        }
+    </script>
+</body>
+</html>
